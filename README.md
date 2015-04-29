@@ -1,7 +1,7 @@
 
 # Selva
 
-Selva is a tiny Java Web framework.
+Selva is a tiny Web framework for Java 8.
 
 ## Minimal Example 
 
