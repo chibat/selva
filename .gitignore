@@ -3,7 +3,7 @@ gradle.properties
 
 # gradle
 .gradle
-/build
+build
 
 # eclipse
 bin

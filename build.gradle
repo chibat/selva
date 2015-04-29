@@ -57,6 +57,9 @@ subprojects {
 
 configure([project("selva-core"), project("selva-jetty")]) {
 
+  apply plugin: 'maven-publish'
+  apply plugin: 'com.jfrog.bintray'
+
   task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
@@ -70,6 +73,52 @@ configure([project("selva-core"), project("selva-jetty")]) {
   artifacts {
     archives sourcesJar
     archives javadocJar
+  }
+
+  def mypom = {
+    scm {
+      url 'https://github.com/chibat/selva'
+    }
+    licenses {
+      license {
+        name "The Apache Software License, Version 2.0"
+        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        distribution "repo"
+      }
+    }
+    developers {
+      developer {
+        id "chibat"
+        name "Tomofumi Chiba"
+      }
+    }
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+
+        artifact sourcesJar
+        artifact javadocJar
+
+        pom.withXml {
+          def root = asNode()
+          root.children().last() + mypom
+        }
+      }
+    }
+  }
+
+  bintray {
+    user = bintrayUsername
+    key =  bintrayAPIKey
+    publications = ['mavenJava']
+    pkg {
+      repo = 'maven'
+      name = 'selva'
+      licenses = ['Apache-2.0']
+    }
   }
 }
 
@@ -119,4 +168,5 @@ project("selva-example") {
     compile(project(":selva-jetty"))
   }
 }
+
 
