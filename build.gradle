@@ -1,0 +1,122 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+  }
+}
+
+allprojects {
+  apply plugin: 'eclipse'
+
+  eclipse {
+    copy{
+      from 'eclipse/org.eclipse.core.resources.prefs'
+      into '.settings'
+    }
+    copy{
+      from 'eclipse/org.eclipse.core.runtime.prefs'
+      into '.settings'
+    }
+  }
+}
+
+subprojects {
+  apply plugin: 'java'
+
+  group = 'io.github.chibat'
+  version = "0.0.0"
+
+  repositories {
+    jcenter()
+  }
+
+  configurations {
+    provided
+  }
+  eclipse.classpath.plusConfigurations += [configurations.provided]
+
+  sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+  }
+
+  sourceCompatibility = targetCompatibility = 1.8
+  tasks.withType(AbstractCompile) each { it.options.encoding = 'UTF-8' }
+  [javadoc]*.options*.encoding = 'UTF-8'
+
+  dependencies {
+    testCompile 'junit:junit:4.11'
+  }
+
+  apply from:'../eclipse.gradle'
+}
+
+configure([project("selva-core"), project("selva-jetty")]) {
+
+  task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  task javadocJar(type: Jar) {
+    classifier = "javadoc"
+    from javadoc
+  }
+
+  artifacts {
+    archives sourcesJar
+    archives javadocJar
+  }
+}
+
+project("selva-core") {
+  dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.+'
+    compile 'org.thymeleaf:thymeleaf:2.0.+'
+    compile 'org.hibernate:hibernate-validator:5.1.3.Final'
+    compile 'javax.el:javax.el-api:2.2.4'
+    compile 'org.glassfish.web:javax.el:2.2.4'
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+    provided 'javax.servlet:javax.servlet-api:3.1.0'
+  }
+}
+
+project("selva-jetty") {
+  dependencies {
+    compile(project(":selva-core"))
+    compile 'org.eclipse.jetty:jetty-server:9.2.10.v20150310'
+    compile 'org.eclipse.jetty:jetty-servlet:9.2.10.v20150310'
+  }
+}
+
+project("selva-example") {
+  apply plugin: 'application'
+  mainClassName = 'io.github.chibat.selva.example.ExampleApp'
+
+  run {
+    jvmArgs("-Dfile.encoding=UTF-8")
+  }
+  
+  jar {
+    baseName = 'selva-example'
+
+    from {
+      configurations.compile.collect {
+        it.isDirectory() ? it : project.zipTree(it)
+      }
+    }
+
+    manifest.attributes('Main-Class': 'io.github.chibat.selva.example.ExampleApp')
+  }
+
+  dependencies {
+    compile 'org.webjars.bower:bootstrap:3.3.4'
+    compile(project(":selva-jetty"))
+  }
+}
+

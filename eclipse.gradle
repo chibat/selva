@@ -1,0 +1,23 @@
+apply plugin: 'eclipse'
+
+eclipseJdt {
+  doLast {
+    copy{
+      from '../eclipse/org.eclipse.core.resources.prefs'
+      into '.settings'
+    }
+    copy{
+      from '../eclipse/org.eclipse.core.runtime.prefs'
+      into '.settings'
+    }
+    copy{
+      from '../eclipse/org.eclipse.jdt.core.prefs'
+      into '.settings'
+    }
+    copy{
+      from '../eclipse/org.eclipse.jdt.ui.prefs'
+      into '.settings'
+    }
+  }
+}
+

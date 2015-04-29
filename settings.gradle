@@ -1,0 +1,6 @@
+rootProject.name = 'selva'
+
+include 'selva-core'
+include 'selva-jetty'
+include 'selva-example'
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Selva framework - Example</title>
+
+    <!-- Bootstrap -->
+    <link href="/webjars/bootstrap/3.3.4/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link href="/webjars/bootstrap/3.3.4/dist/css/bootstrap-theme.min.css" rel="stylesheet" /> -->
+    <link href="/css/common.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">Selva Web Framework - Example</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+
+<h1>Add</h1>
+
+<form class="form-horizontal" method="post">
+  <div class="form-group">
+    <label for="arg1" class="col-sm-2 control-label">Arg1</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="arg1" placeholder="Arg1" name="arg1" th:value="${model.arg1}" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="arg2" class="col-sm-2 control-label">Arg2</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="arg2" placeholder="Arg2" name="arg2" th:value="${model.arg2}" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Add</button>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="alert alert-success" role="alert" th:if="${model.result}" th:text="${model.result}"></div>
+      <div class="alert alert-danger" role="alert" th:if="${!errors.isEmpty()}">
+        <div th:each="error : ${errors}" th:text="${error.propertyPath + ': ' + error.message}"></div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<hr/>
+@chibat
+<br/>
+
+</div>
+<script src="/webjars/jquery/2.1.3/dist/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.4/dist/js/bootstrap.min.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>
