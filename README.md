@@ -46,12 +46,6 @@ public class ExampleApp implements App {
       if (errors.isEmpty()) {
         model.result = Integer.parseInt(model.arg1) + Integer.parseInt(model.arg2);
       }
-      StringBuilder builder = new StringBuilder();
-      for (ConstraintViolation<Model> error : errors) {
-        builder.append(error.getPropertyPath() + ": " + error.getMessage()
-            + System.lineSeparator());
-      }
-      System.out.println(builder);
       return template("/template.html", model, errors);
     });
 
@@ -125,11 +119,13 @@ Also it will open the web browser.
 
 Unix
 ```
+$ gradlew selva-example:jar
 $ java -Dfile.encoding=UTF-8 -jar selva-example/build/libs/selva-example-0.0.0.jar
 ```
 Windows
 ```
-$ java -Dfile.encoding=UTF-8 -jar selva-example\build\libs\selva-example-0.0.0.jar
+> gradlew selva-example:jar
+> java -Dfile.encoding=UTF-8 -jar selva-example\build\libs\selva-example-0.0.0.jar
 ```
 
 That's it.
