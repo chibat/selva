@@ -111,8 +111,8 @@ configure([project("selva-core"), project("selva-jetty")]) {
   }
 
   bintray {
-    user = bintrayUsername
-    key =  bintrayAPIKey
+    user = project.hasProperty('bintrayUsername') ? project.getProperty('bintrayUsername') : null
+    key =  project.hasProperty('bintrayAPIKey') ? project.getProperty('bintrayAPIKey') : null
     publications = ['mavenJava']
     pkg {
       repo = 'maven'
