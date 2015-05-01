@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractServletFilter implements Filter {
 
   protected final Router router = Router.getInstance();
-
   protected final StaticResourceHandler staticResourceHandler = new StaticResourceHandler(false);
+  protected final Config config = Config.getInstance();
 
   protected ServletContext servletContext;
   Logger logger = LoggerFactory.getLogger(AbstractServletFilter.class);
@@ -53,7 +53,7 @@ abstract public class AbstractServletFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding(config.getRequestCharacterEncoding());
     try {
       execute((HttpServletRequest) request, (HttpServletResponse) response, chain);
     } catch (Exception e) {
@@ -67,9 +67,9 @@ abstract public class AbstractServletFilter implements Filter {
 
     Optional<Executor> executor = router.getExecutor(request);
 
-    executor.ifPresent(ps -> {
+    executor.ifPresent(it -> {
       try {
-        Response res = ps.filterChain.execute(new Request(request, ps.pathParams));
+        Response res = it.filterChain.execute(new Request(request, it.pathParams));
         if (res != null) {
           res.execute(request, response, this.servletContext);
         }

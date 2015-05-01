@@ -26,7 +26,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StaticResourceHandler {
 
+  protected final Config config = Config.getInstance();
+
   protected static final String STATIC_RESOURCE_ROOT = "/META-INF/resources";
+
+  protected static final String WELCOMEPAGE_RESOURCE_URI = STATIC_RESOURCE_ROOT
+      + "/assets/welcome.html";
+
   protected static final long DEFAULT_EXPIRE_TIME_MS = 86400000L; // 1 day
   protected static final long DEFAULT_EXPIRE_TIME_S = 86400L; // 1 day
 
@@ -50,7 +56,7 @@ public class StaticResourceHandler {
 
     try (InputStream inputStream = this.getClass().getResourceAsStream(resourceURI)) {
       if (inputStream == null) {
-        return false;
+        return handleWelcomePage(request, response);
       }
 
       if (!disableCache) {
@@ -62,6 +68,28 @@ public class StaticResourceHandler {
       copy(inputStream, response.getOutputStream());
     }
     return true;
+  }
+
+  protected boolean handleWelcomePage(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+
+    if (!config.isWelcomePageFlag() || !request.getServletPath().equals("/")) {
+      return false;
+    }
+
+    try (InputStream inputStream = this.getClass().getResourceAsStream(WELCOMEPAGE_RESOURCE_URI)) {
+      if (inputStream == null) {
+        return false;
+      }
+
+      if (!disableCache) {
+        prepareCacheHeaders(response, WELCOMEPAGE_RESOURCE_URI);
+      }
+      response.setContentType("text/html; charset=" + config.getRequestCharacterEncoding());
+      copy(inputStream, response.getOutputStream());
+    }
+    return true;
+
   }
 
   /**

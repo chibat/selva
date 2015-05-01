@@ -22,7 +22,7 @@ import io.github.chibat.selva.server.Server;
 
 public class FirstApp implements App {
   public void init() {
-    resource("/").get(req -> text("Hello, World!"));
+    // resource("/").get(req -> text("Hello, World!"));
 
     //@formatter:off
     resource("/users/(.+)")
