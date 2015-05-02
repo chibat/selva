@@ -128,5 +128,7 @@ Windows
 > java -Dfile.encoding=UTF-8 -jar selva-example\build\libs\selva-example-0.0.0.jar
 ```
 
+Also, see the [wiki](https://github.com/chibat/selva/wiki).
+
 That's it.
 

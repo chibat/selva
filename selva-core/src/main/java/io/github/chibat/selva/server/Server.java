@@ -19,28 +19,25 @@ package io.github.chibat.selva.server;
 
 import io.github.chibat.selva.App;
 
+import java.util.ServiceLoader;
+
 public class Server {
 
-  protected final EmbeddedServer embeddedServer;
+  protected EmbeddedServer embeddedServer;
 
   public Server() {
-    Class<EmbeddedServer> clazz = null;
 
-    //
-    // for Jetty
-    //
-    try {
-      // TODO TomcatEmbeddedServer, UndertowEmbeddedServer
-      clazz = this.forName("io.github.chibat.selva.server.jetty.JettyEmbeddedServer");
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
+    for (EmbeddedServer es : ServiceLoader.load(EmbeddedServer.class)) {
+      if (this.embeddedServer != null) {
+        throw new RuntimeException("Duplicate implementation of Embedded Server.");
+      }
+      this.embeddedServer = es;
     }
 
-    try {
-      this.embeddedServer = clazz.newInstance();
-    } catch (InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException(e);
+    if (this.embeddedServer == null) {
+      throw new RuntimeException("Not found implementation of Embedded Server.");
     }
+
   }
 
   public Server add(Class<? extends App> clazz) {
