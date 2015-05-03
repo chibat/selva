@@ -95,7 +95,8 @@ public class StaticResourceHandler {
   /**
    *
    * @param resourceURI
-   * @return
+   *          resource URI
+   * @return file name
    */
   protected String getFileName(String resourceURI) {
     String[] tokens = resourceURI.split("/");
@@ -105,7 +106,9 @@ public class StaticResourceHandler {
   /**
    *
    * @param response
+   *          HttpServletResponse
    * @param resourceURI
+   *          resource URI
    */
   protected void prepareCacheHeaders(HttpServletResponse response, String resourceURI) {
     String[] tokens = resourceURI.split("/");

@@ -99,6 +99,7 @@ abstract public class AbstractServletFilter implements Filter {
    * Super class の init メソッドでコールされる。
    * 
    * @param clazz
+   *          App class
    * @return this
    */
   protected AbstractServletFilter register(Class<? extends App> clazz) {

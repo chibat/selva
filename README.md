@@ -120,12 +120,12 @@ Also it will open the web browser.
 Unix
 ```
 $ gradlew selva-example:jar
-$ java -Dfile.encoding=UTF-8 -jar selva-example/build/libs/selva-example-0.0.0.jar
+$ java -Dfile.encoding=UTF-8 -jar selva-example/build/libs/selva-example-0.0.1.jar
 ```
 Windows
 ```
 > gradlew selva-example:jar
-> java -Dfile.encoding=UTF-8 -jar selva-example\build\libs\selva-example-0.0.0.jar
+> java -Dfile.encoding=UTF-8 -jar selva-example\build\libs\selva-example-0.0.1.jar
 ```
 
 Also, see the [wiki](https://github.com/chibat/selva/wiki).
