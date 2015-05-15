@@ -31,7 +31,7 @@ subprojects {
   apply plugin: 'java'
 
   group = 'io.github.chibat'
-  version = "0.0.1"
+  version = "0.0.2"
 
   repositories {
     jcenter()
@@ -118,15 +118,19 @@ configure([project("selva-core"), project("selva-jetty")]) {
     user = project.hasProperty('bintrayUsername') ? project.getProperty('bintrayUsername') : null
     key =  project.hasProperty('bintrayAPIKey') ? project.getProperty('bintrayAPIKey') : null
     publications = ['mavenJava']
-    pkg {
-      repo = 'maven'
-      name = 'selva'
-      licenses = ['Apache-2.0']
-    }
   }
 }
 
 project("selva-core") {
+
+  bintray {
+    pkg {
+      repo = 'maven'
+      name = 'selva-core'
+      licenses = ['Apache-2.0']
+    }
+  }
+
   dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.+'
     compile 'org.thymeleaf:thymeleaf:2.0.+'
@@ -140,6 +144,15 @@ project("selva-core") {
 }
 
 project("selva-jetty") {
+
+  bintray {
+    pkg {
+      repo = 'maven'
+      name = 'selva-jetty'
+      licenses = ['Apache-2.0']
+    }
+  }
+
   dependencies {
     compile(project(":selva-core"))
     compile 'org.eclipse.jetty:jetty-server:9.2.10.v20150310'
