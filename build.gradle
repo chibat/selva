@@ -4,8 +4,12 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
   }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.4'
 }
 
 allprojects {
