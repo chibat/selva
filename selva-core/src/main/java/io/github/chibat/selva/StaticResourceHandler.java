@@ -36,10 +36,7 @@ public class StaticResourceHandler {
   protected static final long DEFAULT_EXPIRE_TIME_MS = 86400000L; // 1 day
   protected static final long DEFAULT_EXPIRE_TIME_S = 86400L; // 1 day
 
-  protected final boolean disableCache;
-
-  public StaticResourceHandler(boolean disableCache) {
-    this.disableCache = disableCache;
+  public StaticResourceHandler() {
   }
 
   protected boolean handle(HttpServletRequest request, HttpServletResponse response)
@@ -59,7 +56,7 @@ public class StaticResourceHandler {
         return handleWelcomePage(request, response);
       }
 
-      if (!disableCache) {
+      if (!config.isDisableStaticResourceCache()) {
         prepareCacheHeaders(response, resourceURI);
       }
       String filename = getFileName(resourceURI);
@@ -82,7 +79,7 @@ public class StaticResourceHandler {
         return false;
       }
 
-      if (!disableCache) {
+      if (!config.isDisableStaticResourceCache()) {
         prepareCacheHeaders(response, WELCOMEPAGE_RESOURCE_URI);
       }
       response.setContentType("text/html; charset=" + config.getRequestCharacterEncoding());

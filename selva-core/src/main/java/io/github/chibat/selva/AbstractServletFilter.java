@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractServletFilter implements Filter {
 
   protected final Router router = Router.getInstance();
-  protected final StaticResourceHandler staticResourceHandler = new StaticResourceHandler(false);
   protected final Config config = Config.getInstance();
+  protected final StaticResourceHandler staticResourceHandler = new StaticResourceHandler();
 
   protected ServletContext servletContext;
   Logger logger = LoggerFactory.getLogger(AbstractServletFilter.class);

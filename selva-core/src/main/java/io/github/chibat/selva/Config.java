@@ -4,6 +4,7 @@ public class Config {
 
   private static final Config instance = new Config();
   private boolean welcomePageFlag = true;
+  private boolean disableStaticResourceCache = true;
   private String requestCharacterEncoding = "UTF-8";
 
   private Config() {
@@ -27,5 +28,13 @@ public class Config {
 
   public void setRequestCharacterEncoding(String requestCharacterEncoding) {
     this.requestCharacterEncoding = requestCharacterEncoding;
+  }
+
+  public boolean isDisableStaticResourceCache() {
+    return disableStaticResourceCache;
+  }
+
+  public void setDisableStaticResourceCache(boolean disableStaticResourceCache) {
+    this.disableStaticResourceCache = disableStaticResourceCache;
   }
 }

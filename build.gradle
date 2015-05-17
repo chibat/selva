@@ -31,7 +31,7 @@ subprojects {
   apply plugin: 'java'
 
   group = 'io.github.chibat'
-  version = "0.0.2"
+  version = "0.0.3"
 
   repositories {
     jcenter()
