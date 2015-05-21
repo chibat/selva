@@ -71,11 +71,6 @@
         if (errors.isEmpty()) {
             model.result = Integer.parseInt(model.arg1) + Integer.parseInt(model.arg2);
         }
-        StringBuilder builder = new StringBuilder();
-        for (ConstraintViolation&lt;Model&gt; error : errors) {
-            builder.append(error.getPropertyPath() + ": " + error.getMessage()
-                + System.lineSeparator());
-        }
         return template("template.html", model, errors);
     });
 }
