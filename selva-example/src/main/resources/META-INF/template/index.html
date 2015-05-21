@@ -47,6 +47,21 @@ This page is using <a target="_blank" href="http://www.thymeleaf.org/">Thymeleaf
   -->
 
 <hr/>
+<h2>An outline of the source code</h2>
+<pre><code class="java" style="font-size: 18px">public class ExampleApp implements App {
+    public void init() {
+        // Write codes that processing requests
+    }
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.add(ExampleApp.class);
+        server.listen();
+    }
+}
+</code></pre>
+
+
+<hr/>
 <h2>Path Parameter and Text Response</h2>
 <form class="form-inline">
   <div class="form-group">
@@ -71,9 +86,9 @@ This page is using <a target="_blank" href="http://www.thymeleaf.org/">Thymeleaf
 <pre id="pathParam_response"> </pre>
 <!--   Try to input multi byte characters.-->
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/blog/(.+)/(.+)/(.+)")
-.get(req -> text("Show - Year: " + req.pathParams(0) + ", Month: " + req.pathParams(1) + ", Day: " + req.pathParams(2)))
-.post(req -> text("Update - Year: " + req.pathParams(0) + ", Month: " + req.pathParams(1) + ", Day: " + req.pathParams(2)));
+<pre><code class="java" style="font-size: 16px">resource("/blog/(.+)/(.+)/(.+)")
+.get(req -> text( "Show - Year: "  + req.pathParams(0) + ", Month: " + req.pathParams(1) + ", Day: " + req.pathParams(2)))
+.post(req-> text("Update - Year: " + req.pathParams(0) + ", Month: " + req.pathParams(1) + ", Day: " + req.pathParams(2)));
 </code></pre>
 
 <hr/>
@@ -91,7 +106,7 @@ This page is using <a target="_blank" href="http://www.thymeleaf.org/">Thymeleaf
 <li>age: <span id="jsonMap_age"></span></li>
 </ul>
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/json/map").get(req -> {
+<pre><code class="java" style="font-size: 18px">resource("/json/map").get(req -> {
     Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
     map.put("name", "chiba");
     map.put("age", "10");
@@ -111,7 +126,7 @@ This page is using <a target="_blank" href="http://www.thymeleaf.org/">Thymeleaf
 <li>age: <span id="jsonBean_age"></span></li>
 </ul>
 <label>Source Code</label><br/>
-<pre><code class="java">public void init() {
+<pre><code class="java" style="font-size: 18px">public void init() {
     resource("/json/bean").get(req -&gt; json(new Bean()));
 }
 
@@ -144,7 +159,7 @@ public static class Bean {
 <li>age: <span id="forward_age"></span></li>
 </ul>
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/forward").get(req -> forward("/json/bean"));
+<pre><code class="java" style="font-size: 18px">resource("/forward").get(req -> forward("/json/bean"));
 </code></pre>
 
 
@@ -157,7 +172,7 @@ public static class Bean {
 <a class="btn btn-default" href="/redirect/inner" target="_blank">Redirect to /redirect/inner</a>
 <br/>
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/redirect/outer").get(req -> redirect("http://www.google.com"));
+<pre><code class="java" style="font-size: 18px">resource("/redirect/outer").get(req -> redirect("http://www.google.com"));
 resource("/redirect/inner").get(req -> redirect("/json/bean"));
 </code></pre>
 
@@ -174,7 +189,7 @@ resource("/redirect/inner").get(req -> redirect("/json/bean"));
 <label>Response</label>
 <pre id="session_response"> </pre>
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/session").post(req -> {
+<pre><code class="java" style="font-size: 18px">resource("/session").post(req -> {
     req.session("sessionData", req.params("sessionData"));
     return text("setted to session: " + req.session("sessionData"));
 }).get(req -> text(req.session("sessionData")));
@@ -189,7 +204,7 @@ resource("/redirect/inner").get(req -> redirect("/json/bean"));
 <label>Response</label>
 <pre id="filter_response"> </pre>
 <label>Source Code</label><br/>
-<pre><code class="java">resource("/filter").get(req -> text("Hello, World!"), new LogFilter());
+<pre><code class="java" style="font-size: 18px">resource("/filter").get(req -> text("Hello, World!"), new LogFilter());
 </code></pre>
 
 <hr/>
