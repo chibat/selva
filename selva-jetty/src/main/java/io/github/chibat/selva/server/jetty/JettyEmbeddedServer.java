@@ -22,7 +22,9 @@ import io.github.chibat.selva.server.DefaultServletFilter;
 import io.github.chibat.selva.server.EmbeddedServer;
 import io.github.chibat.selva.server.ServerConfig;
 
+import java.net.BindException;
 import java.util.EnumSet;
+import java.util.stream.IntStream;
 
 import javax.servlet.DispatcherType;
 
@@ -37,9 +39,6 @@ public class JettyEmbeddedServer implements EmbeddedServer {
   public void listen(ServerConfig serverConfig) {
 
     Server server = new Server();
-    ServerConnector connector = new ServerConnector(server);
-    connector.setPort(serverConfig.getPort());
-    server.setConnectors(new Connector[] { connector });
 
     ServletHandler servletHandler = new ServletHandler();
 
@@ -52,8 +51,28 @@ public class JettyEmbeddedServer implements EmbeddedServer {
     context.setHandler(servletHandler);
     server.setHandler(context);
 
+    ServerConnector connector = new ServerConnector(server);
+    server.setConnectors(new Connector[] { connector });
+
     try {
-      server.start();
+      if (serverConfig.getPort() == null) {
+        IntStream.range(0, SERACH_PORT_TIMES).anyMatch(i -> {
+          serverConfig.setPort(EmbeddedServer.DEFAULT_PORT + i);
+          connector.setPort(serverConfig.getPort());
+          try {
+            server.start();
+          } catch (BindException ignore) {
+            return false;
+          } catch (Exception e) {
+            throw Exceptions.wrap(e);
+          }
+          return true;
+        });
+
+      } else {
+        connector.setPort(serverConfig.getPort());
+        server.start();
+      }
     } catch (Exception e) {
       throw Exceptions.wrap(e);
     }

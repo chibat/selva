@@ -18,14 +18,14 @@
 package io.github.chibat.selva.server;
 
 public class ServerConfig {
-  protected int port = 8080;
+  protected Integer port = null;
   private boolean webBrowserOpenFlag = true;
 
-  public int getPort() {
+  public Integer getPort() {
     return port;
   }
 
-  public void setPort(int port) {
+  public void setPort(Integer port) {
     this.port = port;
   }
 

@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 public interface EmbeddedServer {
 
   public static final Logger logger = LoggerFactory.getLogger(EmbeddedServer.class);
+  public static final int SERACH_PORT_TIMES = 10;
+  public static final int DEFAULT_PORT = 8080;
 
   void listen(ServerConfig serverConfig);
 
