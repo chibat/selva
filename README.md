@@ -1,6 +1,10 @@
 
 # Selva
 
+[ ![Download](https://api.bintray.com/packages/chibat/maven/selva-core/images/download.svg) ](https://bintray.com/chibat/maven/selva-core/_latestVersion)
+
+[ ![Download](https://api.bintray.com/packages/chibat/maven/selva-jetty/images/download.svg) ](https://bintray.com/chibat/maven/selva-jetty/_latestVersion)
+
 Selva is a tiny Web framework for Java 8.
 
 ## Minimal Example 
